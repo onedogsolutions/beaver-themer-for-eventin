@@ -46,3 +46,5 @@ wp-config.php
 # Note: If you wish to whitelist themes,
 # uncomment the next line
 #/wp-content/themes
+# Local reference material (third-party plugin source — do not commit)
+_reference/
