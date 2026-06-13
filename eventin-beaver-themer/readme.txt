@@ -28,6 +28,18 @@ With it you can:
 
 When a Themer layout is assigned to an event location, the plugin steps Eventin's own template aside so your Beaver Builder design renders. When no layout is assigned, Eventin behaves exactly as it does normally.
 
+It also adds an **Eventin** group of Beaver Builder modules so you can rebuild the front-end of an events site (the things The Events Calendar used to render) directly in Beaver Builder:
+
+* **Eventin Events** — a grid/list of events (replaces the events list view).
+* **Eventin Events Tab** — events grouped into category tabs.
+* **Eventin Events Calendar** — a monthly calendar (replaces the calendar view).
+* **Eventin Event Search** — the event search / filter form.
+* **Eventin Speakers** — a grid of speakers.
+* **Eventin Schedule** — an event schedule as tabs or a list.
+* **Eventin Event Tickets** — the ticket / registration form for an event (use it on a single event layout in place of the WooCommerce ticket form).
+
+Each module renders through Eventin's own shortcodes and templates, so output matches Eventin exactly.
+
 == Requirements ==
 
 * Eventin (wp-event-solution)

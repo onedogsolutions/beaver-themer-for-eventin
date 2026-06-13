@@ -51,6 +51,7 @@ final class Eventin_Beaver_Themer {
 
 		$this->load_field_connections();
 		$this->load_layout_handlers();
+		$this->load_modules();
 	}
 
 	/**
@@ -126,6 +127,17 @@ final class Eventin_Beaver_Themer {
 
 		Eventin_BT_Singular::init();
 		Eventin_BT_Archive::init();
+	}
+
+	/**
+	 * Load the Eventin Beaver Builder modules.
+	 *
+	 * @return void
+	 */
+	private function load_modules() {
+		require_once EVENTIN_BT_DIR . 'includes/class-eventin-bt-modules.php';
+
+		Eventin_BT_Modules::init();
 	}
 
 	/**

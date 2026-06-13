@@ -9,8 +9,32 @@ It lets you design Eventin **single event** pages and **event archive** pages wi
 - **Singular layouts** — assign a Themer *Singular* layout to the *Event* (`etn`) post type and design single event pages with Beaver Builder.
 - **Archive layouts** — assign a Themer *Archive* layout to the event archive or the `etn_category` / `etn_tags` taxonomy archives.
 - **Field connections** — an **Eventin** connection group with start/end date & time, registration deadline, timezone, status, event type, address, online/meeting link, organizers, speakers, categories, tags, ticket price, total tickets, tickets sold, logo and banner.
+- **Beaver Builder modules** — an **Eventin** module group for rebuilding an events site front-end in Beaver Builder (a migration path away from The Events Calendar):
+  - **Eventin Events** — event grid/list (`[events]`)
+  - **Eventin Events Tab** — category-tabbed events (`[events_tab]`)
+  - **Eventin Events Calendar** — monthly calendar (`[events_calendar]`)
+  - **Eventin Event Search** — search/filter form (`[event_search_filter]`)
+  - **Eventin Speakers** — speakers grid (`[speakers]`)
+  - **Eventin Schedule** — schedule tabs/list (`[schedules]` / `[schedules_list]`)
+  - **Eventin Event Tickets** — single-event ticket/registration form (Eventin's purchase form; replaces the WooCommerce ticket form on single event layouts)
+
+  Each module renders through Eventin's own shortcodes/templates, so output matches Eventin exactly and stays correct as Eventin evolves.
 
 When a Themer layout is assigned to an event location, the plugin removes Eventin's own single/archive `template_include` override for that request so the Beaver Builder layout renders. With no layout assigned, Eventin behaves exactly as normal.
+
+## Migrating from The Events Calendar
+
+This plugin is built to support replacing The Events Calendar (+ WooCommerce Event Tickets) with Eventin. The Beaver Builder modules above cover the equivalent front-end surfaces:
+
+| The Events Calendar | Eventin Beaver Builder module |
+| --- | --- |
+| Calendar (month) view | Eventin Events Calendar |
+| List / upcoming events | Eventin Events / Eventin Events Tab |
+| Event search bar | Eventin Event Search |
+| Single event page | Themer *Singular* layout + field connections |
+| Ticket form (Event Tickets) | Eventin Event Tickets |
+
+The longer-term target stack is **Eventin + FluentCart**. The Tickets module renders Eventin's own purchase/RSVP form, so it follows whichever checkout engine Eventin is configured to use (WooCommerce today, FluentCart later) without changes here.
 
 ## How it works
 
