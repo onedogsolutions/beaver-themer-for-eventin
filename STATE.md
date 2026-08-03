@@ -53,6 +53,7 @@ install**. See [Known limitations](#known-limitations--risks).
 ```
 eventin-beaver-themer/
   eventin-beaver-themer.php              Plugin header + bootstrap on plugins_loaded
+  uninstall.php                          WordPress uninstall handler (no-op today)
   includes/
     class-eventin-beaver-themer.php      Dependency checks, wiring
     class-eventin-bt-template.php        Removes Eventin template_include overrides
@@ -63,6 +64,10 @@ eventin-beaver-themer/
     class-eventin-bt-modules.php         Module loader + shortcode render helper
   modules/<slug>/<slug>.php              FLBuilder::register_module
   modules/<slug>/includes/frontend.php   Renders the Eventin shortcode/template
+  languages/
+    eventin-beaver-themer.pot            Translation template (99 strings)
+  tools/
+    generate-pot.php                     Regenerates the .pot from source
 ```
 
 Key integration facts (verified against Eventin 4.1.14 source):
@@ -77,6 +82,7 @@ Key integration facts (verified against Eventin 4.1.14 source):
 
 | Date | Version | Summary |
 | --- | --- | --- |
+| 2026-08-03 | 1.0.0-dev | **Distribution housekeeping** — replaced GPLv3 license with GPLv2 (matches plugin header), lean plugin-specific `.gitignore`, added `uninstall.php`, `languages/eventin-beaver-themer.pot` (99 strings) with `tools/generate-pot.php` regeneration script, updated `readme.txt` Tested up to 7.0. Zip packaged for live-site testing. |
 | 2026-06-13 | 1.0.0-dev | **Eventin Beaver Builder modules** (`b80a829`) — Eventin module group for events-site parity: Events, Events Tab, Events Calendar, Event Search, Speakers, Schedule, Event Tickets. Each wraps an Eventin shortcode/template function. README migration mapping added. |
 | 2026-06-13 | 1.0.0-dev | **Themer core** (`ef173e5`) — initial plugin: singular + archive layout takeover, Eventin field connections, dependency guard, readme/README. Removed reference plugin archives from the repo. |
 | 2026-06-13 | — | Reference plugin archives staged for development (`f165b69`), later removed and gitignored. |
@@ -116,8 +122,8 @@ Ordered roughly by priority for the overthetopcakesupplies.com migration.
       confirm the Event Tickets module renders the FluentCart purchase flow correctly.
 - [ ] **Full Oxygen/Bricks element parity** (optional) — port the remaining ~30 addon
       widgets as BB modules if demand warrants.
-- [ ] **WordPress.org / distribution readiness** — finalize readme.txt, i18n `.pot`,
-      screenshots, banner/icon assets, and a tagged release.
+- [x] **i18n `.pot` file** — `languages/eventin-beaver-themer.pot` with 99 translatable strings; `tools/generate-pot.php` regenerates from source.
+- [ ] **WordPress.org / distribution readiness** — finalize screenshots, banner/icon assets, and a tagged release.
 
 ## Known limitations & risks
 

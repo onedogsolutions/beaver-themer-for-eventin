@@ -2,7 +2,7 @@
 Contributors: onedogsolutions
 Tags: eventin, beaver builder, beaver themer, events, theme builder
 Requires at least: 5.8
-Tested up to: 6.5
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later

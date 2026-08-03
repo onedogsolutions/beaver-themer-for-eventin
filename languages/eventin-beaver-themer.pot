@@ -1,0 +1,490 @@
+# Copyright (C) 2026 One Dog Solutions
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Beaver Themer for Eventin 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/onedogsolutions/beaver-themer-for-eventin/issues\n"
+"POT-Creation-Date: 2026-08-03 15:50+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: modules/eventin-speakers/eventin-speakers.php:22
+msgid "A grid of Eventin speakers."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:22
+msgid "A grid or list of Eventin events."
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:22
+msgid "A monthly calendar of Eventin events."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:137
+msgid "All"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:22
+msgid "An Eventin event schedule, as tabs or a list."
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:107
+#: modules/eventin-speakers/eventin-speakers.php:94
+#: modules/eventin-schedule/eventin-schedule.php:62
+#: modules/eventin-events/eventin-events.php:158
+msgid "Ascending"
+msgstr ""
+
+#: includes/class-eventin-beaver-themer.php:171
+msgid "Beaver Themer for Eventin requires the following plugin(s) to be active: %s."
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:113
+#: modules/eventin-calendar/eventin-calendar.php:91
+#: modules/eventin-events/eventin-events.php:169
+msgid "Category IDs"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:53
+#: modules/eventin-speakers/eventin-speakers.php:53
+#: modules/eventin-events/eventin-events.php:54
+msgid "Columns"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:171
+msgid "Comma-separated Eventin category term IDs. Leave blank for all."
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:55
+msgid "Comma-separated Eventin schedule IDs."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:177
+msgid "Comma-separated Eventin tag term IDs. Leave blank for all."
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:115
+#: modules/eventin-calendar/eventin-calendar.php:93
+msgid "Comma-separated category term IDs. Leave blank for all."
+msgstr ""
+
+#: modules/eventin-speakers/eventin-speakers.php:77
+msgid "Comma-separated speaker category term IDs. Leave blank for all."
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:121
+msgid "Comma-separated tag term IDs. Leave blank for all."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:120
+msgid "Content"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:48
+msgid "Current Event"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:108
+#: modules/eventin-speakers/eventin-speakers.php:95
+#: modules/eventin-schedule/eventin-schedule.php:63
+#: modules/eventin-events/eventin-events.php:159
+msgid "Descending"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:111
+msgid "Description Word Limit"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:44
+#: modules/eventin-events/eventin-events.php:66
+msgid "Display"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:45
+msgid "Event"
+msgstr ""
+
+#: includes/page-data-eventin.php:154
+msgid "Event Address"
+msgstr ""
+
+#: includes/page-data-eventin.php:277
+msgid "Event Banner"
+msgstr ""
+
+#: includes/page-data-eventin.php:197
+msgid "Event Categories"
+msgstr ""
+
+#: includes/page-data-eventin.php:88
+msgid "Event End Date"
+msgstr ""
+
+#: includes/page-data-eventin.php:55
+msgid "Event End Date/Time"
+msgstr ""
+
+#: includes/page-data-eventin.php:99
+msgid "Event End Time"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:60
+msgid "Event ID"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:53
+msgid "Event List Position"
+msgstr ""
+
+#: includes/page-data-eventin.php:267
+msgid "Event Logo"
+msgstr ""
+
+#: includes/page-data-eventin.php:177
+msgid "Event Organizers"
+msgstr ""
+
+#: includes/page-data-eventin.php:187
+msgid "Event Speakers"
+msgstr ""
+
+#: includes/page-data-eventin.php:66
+#: modules/eventin-events-tab/eventin-events-tab.php:96
+#: modules/eventin-events/eventin-events.php:147
+msgid "Event Start Date"
+msgstr ""
+
+#: includes/page-data-eventin.php:44
+msgid "Event Start Date/Time"
+msgstr ""
+
+#: includes/page-data-eventin.php:77
+msgid "Event Start Time"
+msgstr ""
+
+#: includes/page-data-eventin.php:131
+msgid "Event Status"
+msgstr ""
+
+#: includes/page-data-eventin.php:207
+msgid "Event Tags"
+msgstr ""
+
+#: includes/page-data-eventin.php:121
+msgid "Event Timezone"
+msgstr ""
+
+#: includes/page-data-eventin.php:144
+msgid "Event Type"
+msgstr ""
+
+#: includes/page-data-eventin.php:18
+#: modules/eventin-events-tab/eventin-events-tab.php:23
+#: modules/eventin-events-tab/eventin-events-tab.php:24
+#: modules/eventin-calendar/eventin-calendar.php:23
+#: modules/eventin-calendar/eventin-calendar.php:24
+#: modules/eventin-speakers/eventin-speakers.php:23
+#: modules/eventin-speakers/eventin-speakers.php:24
+#: modules/eventin-search/eventin-search.php:23
+#: modules/eventin-search/eventin-search.php:24
+#: modules/eventin-schedule/eventin-schedule.php:23
+#: modules/eventin-schedule/eventin-schedule.php:24
+#: modules/eventin-events/eventin-events.php:23
+#: modules/eventin-events/eventin-events.php:24
+#: modules/eventin-tickets/eventin-tickets.php:24
+#: modules/eventin-tickets/eventin-tickets.php:25
+msgid "Eventin"
+msgstr ""
+
+#: modules/eventin-search/eventin-search.php:21
+msgid "Eventin Event Search"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:22
+msgid "Eventin Event Tickets"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:21
+msgid "Eventin Events"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:21
+msgid "Eventin Events Calendar"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:21
+msgid "Eventin Events Tab"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:21
+msgid "Eventin Schedule"
+msgstr ""
+
+#: modules/eventin-speakers/eventin-speakers.php:21
+msgid "Eventin Speakers"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:22
+msgid "Eventin events grouped into category tabs."
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:87
+msgid "Events Per Tab"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:165
+msgid "Filter"
+msgstr ""
+
+#: includes/page-data-eventin.php:30
+msgid "Format"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:37
+#: modules/eventin-calendar/eventin-calendar.php:37
+#: modules/eventin-speakers/eventin-speakers.php:37
+#: modules/eventin-search/eventin-search.php:37
+#: modules/eventin-schedule/eventin-schedule.php:37
+#: modules/eventin-tickets/eventin-tickets.php:38
+msgid "General"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:99
+#: modules/eventin-speakers/eventin-speakers.php:85
+#: modules/eventin-events/eventin-events.php:150
+msgid "ID"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:40
+#: modules/eventin-calendar/eventin-calendar.php:40
+#: modules/eventin-speakers/eventin-speakers.php:40
+#: modules/eventin-events/eventin-events.php:37
+#: modules/eventin-events/eventin-events.php:40
+msgid "Layout"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:56
+msgid "Left"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:48
+msgid "List"
+msgstr ""
+
+#: includes/page-data-eventin.php:235
+#: modules/eventin-events-tab/eventin-events-tab.php:68
+#: modules/eventin-events-tab/eventin-events-tab.php:77
+#: modules/eventin-calendar/eventin-calendar.php:66
+#: modules/eventin-calendar/eventin-calendar.php:75
+#: modules/eventin-events/eventin-events.php:74
+#: modules/eventin-events/eventin-events.php:83
+#: modules/eventin-events/eventin-events.php:92
+#: modules/eventin-events/eventin-events.php:106
+msgid "No"
+msgstr ""
+
+#: modules/eventin-tickets/includes/frontend.php:26
+msgid "No event selected. Place this module on a single event layout, or choose a specific event."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:127
+msgid "Number of Events"
+msgstr ""
+
+#: modules/eventin-speakers/eventin-speakers.php:69
+msgid "Number of Speakers"
+msgstr ""
+
+#: includes/page-data-eventin.php:164
+msgid "Online/Meeting Link"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:104
+#: modules/eventin-speakers/eventin-speakers.php:91
+#: modules/eventin-schedule/eventin-schedule.php:59
+#: modules/eventin-events/eventin-events.php:155
+msgid "Order"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:93
+#: modules/eventin-speakers/eventin-speakers.php:81
+#: modules/eventin-events/eventin-events.php:144
+msgid "Order By"
+msgstr ""
+
+#: includes/page-data-eventin.php:33
+msgid "PHP date format. Leave blank to use the site default."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:139
+msgid "Past"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:98
+#: modules/eventin-speakers/eventin-speakers.php:86
+#: modules/eventin-events/eventin-events.php:149
+msgid "Published Date"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:83
+#: modules/eventin-calendar/eventin-calendar.php:81
+#: modules/eventin-speakers/eventin-speakers.php:65
+#: modules/eventin-events/eventin-events.php:123
+msgid "Query"
+msgstr ""
+
+#: includes/page-data-eventin.php:110
+msgid "Registration Deadline"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:57
+msgid "Right"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:53
+msgid "Schedule IDs"
+msgstr ""
+
+#: includes/page-data-eventin.php:231
+msgid "Show Currency"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:62
+#: modules/eventin-events/eventin-events.php:97
+msgid "Show Description"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:73
+#: modules/eventin-events/eventin-events.php:79
+msgid "Show End Date"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:134
+msgid "Show Events"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:64
+#: modules/eventin-events/eventin-events.php:70
+msgid "Show Location"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:88
+msgid "Show Remaining Tickets"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:71
+msgid "Show Upcoming List"
+msgstr ""
+
+#: modules/eventin-speakers/eventin-speakers.php:75
+msgid "Speaker Category IDs"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:49
+msgid "Specific Event"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:44
+#: modules/eventin-calendar/eventin-calendar.php:44
+#: modules/eventin-speakers/eventin-speakers.php:44
+#: modules/eventin-events/eventin-events.php:44
+msgid "Style"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:47
+#: modules/eventin-calendar/eventin-calendar.php:47
+#: modules/eventin-speakers/eventin-speakers.php:47
+#: modules/eventin-events/eventin-events.php:47
+msgid "Style 1"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:48
+#: modules/eventin-calendar/eventin-calendar.php:48
+#: modules/eventin-speakers/eventin-speakers.php:48
+#: modules/eventin-events/eventin-events.php:48
+msgid "Style 2"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:49
+msgid "Style 3"
+msgstr ""
+
+#: modules/eventin-schedule/eventin-schedule.php:47
+msgid "Tabs"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:119
+#: modules/eventin-events/eventin-events.php:175
+msgid "Tag IDs"
+msgstr ""
+
+#: modules/eventin-search/eventin-search.php:22
+msgid "The Eventin event search and filter form."
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:63
+msgid "The ID of the event to show tickets for."
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:23
+msgid "The ticket / registration form for an event."
+msgstr ""
+
+#: modules/eventin-search/eventin-search.php:45
+msgid "This module outputs the Eventin event search and filter form. It has no settings."
+msgstr ""
+
+#: includes/page-data-eventin.php:220
+msgid "Ticket Price (from)"
+msgstr ""
+
+#: includes/page-data-eventin.php:254
+msgid "Tickets Sold"
+msgstr ""
+
+#: modules/eventin-events-tab/eventin-events-tab.php:97
+#: modules/eventin-speakers/eventin-speakers.php:84
+#: modules/eventin-events/eventin-events.php:148
+msgid "Title"
+msgstr ""
+
+#: includes/page-data-eventin.php:244
+msgid "Total Tickets"
+msgstr ""
+
+#: includes/class-eventin-bt-page-data.php:370
+msgid "Unlimited"
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:138
+msgid "Upcoming"
+msgstr ""
+
+#: modules/eventin-calendar/eventin-calendar.php:85
+msgid "Upcoming List Limit"
+msgstr ""
+
+#: modules/eventin-tickets/eventin-tickets.php:56
+msgid "Use \"Current Event\" inside a single event Themer layout."
+msgstr ""
+
+#: modules/eventin-events/eventin-events.php:130
+msgid "Use -1 to show all events."
+msgstr ""
+
+#: includes/page-data-eventin.php:234
+#: modules/eventin-events-tab/eventin-events-tab.php:67
+#: modules/eventin-events-tab/eventin-events-tab.php:76
+#: modules/eventin-calendar/eventin-calendar.php:65
+#: modules/eventin-calendar/eventin-calendar.php:74
+#: modules/eventin-events/eventin-events.php:73
+#: modules/eventin-events/eventin-events.php:82
+#: modules/eventin-events/eventin-events.php:91
+#: modules/eventin-events/eventin-events.php:105
+msgid "Yes"
+msgstr ""
+
