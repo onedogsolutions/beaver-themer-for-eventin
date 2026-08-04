@@ -272,9 +272,21 @@ final class Eventin_BT_Page_Data {
 	 * @return string
 	 */
 	public static function organizers() {
-		$event = self::event();
+		$names = array();
 
-		return $event ? self::people_names( self::safe( array( $event, 'get_organizers' ) ) ) : '';
+		foreach ( self::organizer_ids() as $id ) {
+			$model = self::user_model( $id );
+
+			if ( $model ) {
+				$name = $model->get_speaker_title();
+
+				if ( ! empty( $name ) ) {
+					$names[] = $name;
+				}
+			}
+		}
+
+		return implode( ', ', $names );
 	}
 
 	/**
@@ -283,9 +295,21 @@ final class Eventin_BT_Page_Data {
 	 * @return string
 	 */
 	public static function speakers() {
-		$event = self::event();
+		$names = array();
 
-		return $event ? self::people_names( self::safe( array( $event, 'get_speakers' ) ) ) : '';
+		foreach ( self::speaker_ids() as $id ) {
+			$model = self::user_model( $id );
+
+			if ( $model ) {
+				$name = $model->get_speaker_title();
+
+				if ( ! empty( $name ) ) {
+					$names[] = $name;
+				}
+			}
+		}
+
+		return implode( ', ', $names );
 	}
 
 	/**
@@ -425,30 +449,824 @@ final class Eventin_BT_Page_Data {
 		return ( $id && is_numeric( $id ) ) ? (int) $id : '';
 	}
 
+	/*
+	 * ---------------------------------------------------------------
+	 * Location helpers
+	 * ---------------------------------------------------------------
+	 */
+
 	/**
-	 * Reduce an array of Eventin user models to a comma separated name list.
+	 * Read the etn_event_location array from the current event.
 	 *
-	 * @param mixed $people Array of User_Model objects.
+	 * @return array Empty array when not available.
+	 */
+	private static function location_data() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return array();
+		}
+
+		try {
+			$location = $event->etn_event_location;
+		} catch ( \Exception $e ) {
+			return array();
+		}
+
+		return is_array( $location ) ? $location : array();
+	}
+
+	/**
+	 * Latitude from the event location.
 	 *
 	 * @return string
 	 */
-	private static function people_names( $people ) {
-		if ( empty( $people ) || ! is_array( $people ) ) {
+	public static function latitude() {
+		$location = self::location_data();
+
+		return isset( $location['latitude'] ) ? (string) $location['latitude'] : '';
+	}
+
+	/**
+	 * Longitude from the event location.
+	 *
+	 * @return string
+	 */
+	public static function longitude() {
+		$location = self::location_data();
+
+		return isset( $location['longitude'] ) ? (string) $location['longitude'] : '';
+	}
+
+	/**
+	 * Google Maps embed URL computed from lat/lng or address.
+	 *
+	 * @return string
+	 */
+	public static function map_url() {
+		$location = self::location_data();
+
+		if ( ! empty( $location['latitude'] ) && ! empty( $location['longitude'] ) ) {
+			return sprintf(
+				'https://maps.google.com/maps?q=%s,%s&z=15&output=embed',
+				$location['latitude'],
+				$location['longitude']
+			);
+		}
+
+		$address = self::address();
+
+		if ( ! empty( $address ) ) {
+			return 'https://maps.google.com/maps?q=' . rawurlencode( $address ) . '&z=15&output=embed';
+		}
+
+		return '';
+	}
+
+	/**
+	 * Location type (venue / online).
+	 *
+	 * @return string
+	 */
+	public static function location_type() {
+		$event = self::event();
+
+		if ( ! $event ) {
 			return '';
 		}
 
-		$names = array();
+		try {
+			$type = $event->etn_event_location_type;
+		} catch ( \Exception $e ) {
+			return '';
+		}
 
-		foreach ( $people as $person ) {
-			if ( is_object( $person ) && method_exists( $person, 'get_speaker_title' ) ) {
-				$name = $person->get_speaker_title();
-				if ( ! empty( $name ) ) {
-					$names[] = $name;
-				}
+		return $type ? ucfirst( (string) $type ) : '';
+	}
+
+	/**
+	 * External event link URL.
+	 *
+	 * @return string
+	 */
+	public static function external_link() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		try {
+			$link = $event->external_link;
+		} catch ( \Exception $e ) {
+			return '';
+		}
+
+		return ! empty( $link ) ? esc_url( $link ) : '';
+	}
+
+	/*
+	 * ---------------------------------------------------------------
+	 * Ticket helpers (aggregate)
+	 * ---------------------------------------------------------------
+	 */
+
+	/**
+	 * Highest ticket price, optionally with currency.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function max_ticket_price( $settings ) {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		$variations = self::safe( array( $event, 'get_ticket' ) );
+
+		if ( empty( $variations ) || ! is_array( $variations ) ) {
+			return '';
+		}
+
+		$prices = array();
+
+		foreach ( $variations as $variation ) {
+			if ( isset( $variation['etn_ticket_price'] ) && is_numeric( $variation['etn_ticket_price'] ) ) {
+				$prices[] = (float) $variation['etn_ticket_price'];
 			}
 		}
 
-		return implode( ', ', $names );
+		if ( empty( $prices ) ) {
+			return '';
+		}
+
+		$price         = max( $prices );
+		$with_currency = ! ( isset( $settings->show_currency ) && '0' === (string) $settings->show_currency );
+
+		if ( $with_currency && class_exists( 'Etn\\Core\\Event\\Helper' ) && method_exists( 'Etn\\Core\\Event\\Helper', 'instance' ) ) {
+			return \Etn\Core\Event\Helper::instance()->currency_with_position( $price );
+		}
+
+		return (string) $price;
+	}
+
+	/**
+	 * Ticket price range formatted as "From $X to $Y".
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_price_range( $settings ) {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		$variations = self::safe( array( $event, 'get_ticket' ) );
+
+		if ( empty( $variations ) || ! is_array( $variations ) ) {
+			return '';
+		}
+
+		$prices = array();
+
+		foreach ( $variations as $variation ) {
+			if ( isset( $variation['etn_ticket_price'] ) && is_numeric( $variation['etn_ticket_price'] ) ) {
+				$prices[] = (float) $variation['etn_ticket_price'];
+			}
+		}
+
+		if ( empty( $prices ) ) {
+			return '';
+		}
+
+		$min           = min( $prices );
+		$max           = max( $prices );
+		$with_currency = ! ( isset( $settings->show_currency ) && '0' === (string) $settings->show_currency );
+
+		if ( $min === $max ) {
+			$display = $min;
+
+			if ( $with_currency && class_exists( 'Etn\\Core\\Event\\Helper' ) && method_exists( 'Etn\\Core\\Event\\Helper', 'instance' ) ) {
+				return \Etn\Core\Event\Helper::instance()->currency_with_position( $display );
+			}
+
+			return (string) $display;
+		}
+
+		if ( $with_currency && class_exists( 'Etn\\Core\\Event\\Helper' ) && method_exists( 'Etn\\Core\\Event\\Helper', 'instance' ) ) {
+			$helper = \Etn\Core\Event\Helper::instance();
+
+			return sprintf(
+				/* translators: 1: minimum price, 2: maximum price */
+				__( 'From %1$s to %2$s', 'eventin-beaver-themer' ),
+				$helper->currency_with_position( $min ),
+				$helper->currency_with_position( $max )
+			);
+		}
+
+		return sprintf(
+			/* translators: 1: minimum price, 2: maximum price */
+			__( 'From %1$s to %2$s', 'eventin-beaver-themer' ),
+			$min,
+			$max
+		);
+	}
+
+	/**
+	 * Number of ticket variations.
+	 *
+	 * @return string
+	 */
+	public static function ticket_count() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		$variations = self::safe( array( $event, 'get_ticket' ) );
+
+		return is_array( $variations ) ? (string) count( $variations ) : '0';
+	}
+
+	/**
+	 * Remaining tickets (total minus sold).
+	 *
+	 * @return string
+	 */
+	public static function remaining_tickets() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		$total = self::safe( array( $event, 'get_total_ticket' ) );
+		$sold  = self::safe( array( $event, 'get_total_sold_ticket' ) );
+
+		if ( ! is_numeric( $total ) || ! is_numeric( $sold ) ) {
+			return '';
+		}
+
+		if ( -1 === (int) $total ) {
+			return __( 'Unlimited', 'eventin-beaver-themer' );
+		}
+
+		return (string) max( 0, (int) $total - (int) $sold );
+	}
+
+	/*
+	 * ---------------------------------------------------------------
+	 * Misc scalar getters
+	 * ---------------------------------------------------------------
+	 */
+
+	/**
+	 * Whether the event is recurring.
+	 *
+	 * @return string
+	 */
+	public static function is_recurring() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return '';
+		}
+
+		try {
+			$value = $event->recurring_enabled;
+		} catch ( \Exception $e ) {
+			return '';
+		}
+
+		return 'yes' === $value
+			? __( 'Yes', 'eventin-beaver-themer' )
+			: __( 'No', 'eventin-beaver-themer' );
+	}
+
+	/**
+	 * Event permalink.
+	 *
+	 * @return string
+	 */
+	public static function event_url() {
+		$post_id = get_the_ID();
+
+		if ( ! $post_id || 'etn' !== get_post_type( $post_id ) ) {
+			return '';
+		}
+
+		return get_permalink( $post_id );
+	}
+
+	/**
+	 * Number of speakers linked to the event.
+	 *
+	 * @return string
+	 */
+	public static function speaker_count() {
+		return (string) count( self::speaker_ids() );
+	}
+
+	/**
+	 * Number of organizers linked to the event.
+	 *
+	 * @return string
+	 */
+	public static function organizer_count() {
+		return (string) count( self::organizer_ids() );
+	}
+
+	/*
+	 * ---------------------------------------------------------------
+	 * Speaker / Organizer / Ticket / FAQ indexed accessors (Phase 2)
+	 * ---------------------------------------------------------------
+	 */
+
+	/**
+	 * Get a speaker User_Model at a given index.
+	 *
+	 * @param int $index Zero-based index.
+	 *
+	 * @return \Etn\Core\Speaker\User_Model|null
+	 */
+	private static function speaker_model_at( $index ) {
+		$ids = self::speaker_ids();
+
+		if ( ! isset( $ids[ $index ] ) ) {
+			return null;
+		}
+
+		return self::user_model( $ids[ $index ] );
+	}
+
+	/**
+	 * Get an organizer User_Model at a given index.
+	 *
+	 * @param int $index Zero-based index.
+	 *
+	 * @return \Etn\Core\Speaker\User_Model|null
+	 */
+	private static function organizer_model_at( $index ) {
+		$ids = self::organizer_ids();
+
+		if ( ! isset( $ids[ $index ] ) ) {
+			return null;
+		}
+
+		return self::user_model( $ids[ $index ] );
+	}
+
+	/**
+	 * Get a ticket variation array at a given index.
+	 *
+	 * @param int $index Zero-based index.
+	 *
+	 * @return array|null
+	 */
+	private static function ticket_at( $index ) {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return null;
+		}
+
+		$variations = self::safe( array( $event, 'get_ticket' ) );
+
+		return ( is_array( $variations ) && isset( $variations[ $index ] ) ) ? $variations[ $index ] : null;
+	}
+
+	/**
+	 * Get a FAQ item array at a given index.
+	 *
+	 * @param int $index Zero-based index.
+	 *
+	 * @return array|null
+	 */
+	private static function faq_at( $index ) {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return null;
+		}
+
+		try {
+			$faqs = $event->etn_event_faq;
+		} catch ( \Exception $e ) {
+			return null;
+		}
+
+		return ( is_array( $faqs ) && isset( $faqs[ $index ] ) ) ? $faqs[ $index ] : null;
+	}
+
+	// -- Speaker indexed getters --
+
+	/**
+	 * Speaker name at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_name( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_title() : '';
+	}
+
+	/**
+	 * Speaker photo attachment ID at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return int|string
+	 */
+	public static function speaker_photo( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		if ( ! $model ) {
+			return '';
+		}
+
+		$id = $model->get_image_id();
+
+		return $id ? (int) $id : '';
+	}
+
+	/**
+	 * Speaker designation / title at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_designation( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_designation() : '';
+	}
+
+	/**
+	 * Speaker company name at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_company( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_company_name() : '';
+	}
+
+	/**
+	 * Speaker bio / summary at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_bio( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_summary() : '';
+	}
+
+	/**
+	 * Speaker website URL at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_website( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_url() : '';
+	}
+
+	/**
+	 * Speaker email at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function speaker_email( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_email() : '';
+	}
+
+	/**
+	 * Speaker company logo attachment ID at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return int|string
+	 */
+	public static function speaker_company_logo( $settings ) {
+		$model = self::speaker_model_at( self::index_from( $settings ) );
+
+		if ( ! $model ) {
+			return '';
+		}
+
+		$id = $model->get_company_logo_id();
+
+		return $id ? (int) $id : '';
+	}
+
+	// -- Organizer indexed getters --
+
+	/**
+	 * Organizer name at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_name( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_title() : '';
+	}
+
+	/**
+	 * Organizer photo attachment ID at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return int|string
+	 */
+	public static function organizer_photo( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		if ( ! $model ) {
+			return '';
+		}
+
+		$id = $model->get_image_id();
+
+		return $id ? (int) $id : '';
+	}
+
+	/**
+	 * Organizer email at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_email( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_email() : '';
+	}
+
+	/**
+	 * Organizer phone at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_phone( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_phone() : '';
+	}
+
+	/**
+	 * Organizer website URL at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_website( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_speaker_url() : '';
+	}
+
+	/**
+	 * Organizer company name at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_company( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_company_name() : '';
+	}
+
+	/**
+	 * Organizer bio at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function organizer_bio( $settings ) {
+		$model = self::organizer_model_at( self::index_from( $settings ) );
+
+		return $model ? $model->get_organizer_bio() : '';
+	}
+
+	// -- Ticket indexed getters --
+
+	/**
+	 * Ticket variation name at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_name( $settings ) {
+		$ticket = self::ticket_at( self::index_from( $settings ) );
+
+		return ( $ticket && isset( $ticket['etn_ticket_name'] ) ) ? (string) $ticket['etn_ticket_name'] : '';
+	}
+
+	/**
+	 * Ticket variation price at index, optionally with currency.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_price_item( $settings ) {
+		$ticket = self::ticket_at( self::index_from( $settings ) );
+
+		if ( ! $ticket || ! isset( $ticket['etn_ticket_price'] ) || ! is_numeric( $ticket['etn_ticket_price'] ) ) {
+			return '';
+		}
+
+		$price         = (float) $ticket['etn_ticket_price'];
+		$with_currency = ! ( isset( $settings->show_currency ) && '0' === (string) $settings->show_currency );
+
+		if ( $with_currency && class_exists( 'Etn\\Core\\Event\\Helper' ) && method_exists( 'Etn\\Core\\Event\\Helper', 'instance' ) ) {
+			return \Etn\Core\Event\Helper::instance()->currency_with_position( $price );
+		}
+
+		return (string) $price;
+	}
+
+	/**
+	 * Ticket variation available quantity at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_available( $settings ) {
+		$ticket = self::ticket_at( self::index_from( $settings ) );
+
+		return ( $ticket && isset( $ticket['etn_avaiilable_tickets'] ) ) ? (string) $ticket['etn_avaiilable_tickets'] : '';
+	}
+
+	/**
+	 * Ticket variation sold count at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_sold_item( $settings ) {
+		$ticket = self::ticket_at( self::index_from( $settings ) );
+
+		return ( $ticket && isset( $ticket['etn_sold_tickets'] ) ) ? (string) $ticket['etn_sold_tickets'] : '';
+	}
+
+	/**
+	 * Ticket variation remaining (available - sold) at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function ticket_remaining( $settings ) {
+		$ticket = self::ticket_at( self::index_from( $settings ) );
+
+		if ( ! $ticket ) {
+			return '';
+		}
+
+		$avail = isset( $ticket['etn_avaiilable_tickets'] ) ? (int) $ticket['etn_avaiilable_tickets'] : 0;
+		$sold  = isset( $ticket['etn_sold_tickets'] ) ? (int) $ticket['etn_sold_tickets'] : 0;
+
+		return (string) max( 0, $avail - $sold );
+	}
+
+	// -- FAQ indexed getters --
+
+	/**
+	 * FAQ question title at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function faq_question( $settings ) {
+		$faq = self::faq_at( self::index_from( $settings ) );
+
+		return ( $faq && isset( $faq['etn_faq_title'] ) ) ? (string) $faq['etn_faq_title'] : '';
+	}
+
+	/**
+	 * FAQ answer content at index.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return string
+	 */
+	public static function faq_answer( $settings ) {
+		$faq = self::faq_at( self::index_from( $settings ) );
+
+		return ( $faq && isset( $faq['etn_faq_content'] ) ) ? wp_kses_post( $faq['etn_faq_content'] ) : '';
+	}
+
+	/*
+	 * ---------------------------------------------------------------
+	 * Internal helpers
+	 * ---------------------------------------------------------------
+	 */
+
+	/**
+	 * Read the zero-based index from a connection's settings.
+	 *
+	 * @param object $settings Connection settings.
+	 *
+	 * @return int
+	 */
+	private static function index_from( $settings ) {
+		return isset( $settings->index ) ? (int) $settings->index : 0;
+	}
+
+	/**
+	 * Get array of speaker user IDs for the current event.
+	 *
+	 * @return int[]
+	 */
+	private static function speaker_ids() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return array();
+		}
+
+		try {
+			$ids = $event->etn_event_speaker;
+		} catch ( \Exception $e ) {
+			return array();
+		}
+
+		return is_array( $ids ) ? array_map( 'intval', $ids ) : array();
+	}
+
+	/**
+	 * Get array of organizer user IDs for the current event.
+	 *
+	 * @return int[]
+	 */
+	private static function organizer_ids() {
+		$event = self::event();
+
+		if ( ! $event ) {
+			return array();
+		}
+
+		try {
+			$ids = $event->etn_event_organizer;
+		} catch ( \Exception $e ) {
+			return array();
+		}
+
+		return is_array( $ids ) ? array_map( 'intval', $ids ) : array();
+	}
+
+	/**
+	 * Create a Speaker/Organizer User_Model for a given user ID.
+	 *
+	 * @param int $user_id WordPress user ID.
+	 *
+	 * @return \Etn\Core\Speaker\User_Model|null
+	 */
+	private static function user_model( $user_id ) {
+		if ( ! $user_id || ! class_exists( 'Etn\\Core\\Speaker\\User_Model' ) ) {
+			return null;
+		}
+
+		return new \Etn\Core\Speaker\User_Model( $user_id );
 	}
 
 	/**

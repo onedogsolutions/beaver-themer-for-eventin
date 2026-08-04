@@ -18,10 +18,10 @@ class Eventin_BT_Events_Tab_Module extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Eventin Events Tab', 'eventin-beaver-themer' ),
+				'name'            => 'Eventin ' . Eventin_BT_Labels::get( 'events' ) . ' Tab',
 				'description'     => __( 'Eventin events grouped into category tabs.', 'eventin-beaver-themer' ),
-				'category'        => __( 'Eventin', 'eventin-beaver-themer' ),
-				'group'           => __( 'Eventin', 'eventin-beaver-themer' ),
+				'category'        => Eventin_BT_Labels::get( 'module_category' ),
+				'group'           => Eventin_BT_Labels::get( 'module_group' ),
 				'dir'             => EVENTIN_BT_DIR . 'modules/eventin-events-tab/',
 				'url'             => EVENTIN_BT_URL . 'modules/eventin-events-tab/',
 				'partial_refresh' => true,

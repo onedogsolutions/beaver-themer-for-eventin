@@ -3,7 +3,7 @@
  * Plugin Name:       Beaver Themer for Eventin
  * Plugin URI:        https://github.com/onedogsolutions/beaver-themer-for-eventin
  * Description:        Integrates Eventin with Beaver Themer so you can design single event and event archive layouts with Beaver Builder, plus field connections for event data.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            One Dog Solutions
  * Author URI:        https://onedog.solutions/
  * License:           GPL-2.0+
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'EVENTIN_BT_VERSION', '1.0.0' );
+define( 'EVENTIN_BT_VERSION', '1.1.0' );
 define( 'EVENTIN_BT_FILE', __FILE__ );
 define( 'EVENTIN_BT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EVENTIN_BT_URL', plugin_dir_url( __FILE__ ) );

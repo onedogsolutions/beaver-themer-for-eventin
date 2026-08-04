@@ -12,6 +12,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * Responsibilities:
  *  - Verify that both Eventin and Beaver Themer are active.
+ *  - Load the label dictionary and admin settings page.
  *  - Register Eventin field connections (FLPageData properties).
  *  - Load the singular/archive layout handlers that let Themer take over
  *    the single event and event archive templates.
@@ -42,6 +43,10 @@ final class Eventin_Beaver_Themer {
 	 * Constructor.
 	 */
 	private function __construct() {
+		// Labels and settings load unconditionally (needed even when
+		// dependencies are missing so the settings page still works).
+		$this->load_labels_and_settings();
+
 		add_action( 'init', array( $this, 'load_textdomain' ), 5 );
 
 		if ( ! $this->has_dependencies() ) {
@@ -138,6 +143,21 @@ final class Eventin_Beaver_Themer {
 		require_once EVENTIN_BT_DIR . 'includes/class-eventin-bt-modules.php';
 
 		Eventin_BT_Modules::init();
+	}
+
+	/**
+	 * Load the label dictionary and admin settings page.
+	 *
+	 * Loaded unconditionally so the settings page remains accessible
+	 * even when Eventin or Beaver Themer is deactivated.
+	 *
+	 * @return void
+	 */
+	private function load_labels_and_settings() {
+		require_once EVENTIN_BT_DIR . 'includes/class-eventin-bt-labels.php';
+		require_once EVENTIN_BT_DIR . 'includes/class-eventin-bt-settings.php';
+
+		Eventin_BT_Settings::init();
 	}
 
 	/**

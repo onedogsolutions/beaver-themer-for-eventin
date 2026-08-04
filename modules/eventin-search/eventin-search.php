@@ -18,10 +18,10 @@ class Eventin_BT_Search_Module extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Eventin Event Search', 'eventin-beaver-themer' ),
+				'name'            => 'Eventin ' . Eventin_BT_Labels::get( 'event' ) . ' Search',
 				'description'     => __( 'The Eventin event search and filter form.', 'eventin-beaver-themer' ),
-				'category'        => __( 'Eventin', 'eventin-beaver-themer' ),
-				'group'           => __( 'Eventin', 'eventin-beaver-themer' ),
+				'category'        => Eventin_BT_Labels::get( 'module_category' ),
+				'group'           => Eventin_BT_Labels::get( 'module_group' ),
 				'dir'             => EVENTIN_BT_DIR . 'modules/eventin-search/',
 				'url'             => EVENTIN_BT_URL . 'modules/eventin-search/',
 				'partial_refresh' => true,

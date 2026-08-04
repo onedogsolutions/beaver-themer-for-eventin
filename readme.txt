@@ -4,7 +4,7 @@ Tags: eventin, beaver builder, beaver themer, events, theme builder
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -25,6 +25,15 @@ With it you can:
     * Organizers, speakers, categories and tags
     * Ticket price, total tickets and tickets sold
     * Event logo and banner images
+    * Latitude, longitude, map URL and location type
+    * External link, recurring event flag
+    * Per-ticket variations (name, price, available, sold, remaining) — indexed
+    * Per-speaker details (name, photo, designation, company, bio, email, website, logo) — indexed
+    * Per-organizer details (name, photo, email, phone, website, company, bio) — indexed
+    * FAQ questions and answers — indexed
+    * Speaker/organizer counts, ticket stats, price ranges
+
+Customize the plugin's terminology through **Settings → Eventin Beaver Themer** (e.g. rename "Event" to "Class", "Speaker" to "Instructor") — no code required.
 
 When a Themer layout is assigned to an event location, the plugin steps Eventin's own template aside so your Beaver Builder design renders. When no layout is assigned, Eventin behaves exactly as it does normally.
 
@@ -54,6 +63,13 @@ Each module renders through Eventin's own shortcodes and templates, so output ma
 4. In *Beaver Builder > Themer Layouts*, add a new layout, choose **Singular** or **Archive**, and set its location to the *Event* post type or an event taxonomy.
 
 == Changelog ==
+
+= 1.1.0 =
+* **50+ field connections** — added P1 scalar connections (latitude/longitude, map URL, location type, external link, recurring flag, ticket stats, speaker/organizer counts) and P2 indexed connections (per-speaker, per-organizer, per-ticket, FAQ details).
+* **Label rewrite system** — centralized `Eventin_BT_Labels` class with three-tier override chain (defaults → admin settings → developer filter). Migrate terminology from The Events Calendar (e.g. "Event" → "Class", "Speaker" → "Instructor").
+* **Admin settings page** — Settings → Eventin Beaver Themer provides UI for label customization without PHP code.
+* **Speaker/organizer bug fix** — fixed broken field connections that were calling `User_Model` methods on `stdClass` objects instead of proper `Speaker\User_Model` instances.
+* **Label-aware modules** — all 7 Beaver Builder modules now use `Eventin_BT_Labels` for name, category, and group labels.
 
 = 1.0.0 =
 * Initial release: Themer singular + archive layout support for Eventin events, plus Eventin field connections.

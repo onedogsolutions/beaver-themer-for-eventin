@@ -18,10 +18,10 @@ class Eventin_BT_Calendar_Module extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Eventin Events Calendar', 'eventin-beaver-themer' ),
+				'name'            => 'Eventin ' . Eventin_BT_Labels::get( 'events' ) . ' Calendar',
 				'description'     => __( 'A monthly calendar of Eventin events.', 'eventin-beaver-themer' ),
-				'category'        => __( 'Eventin', 'eventin-beaver-themer' ),
-				'group'           => __( 'Eventin', 'eventin-beaver-themer' ),
+				'category'        => Eventin_BT_Labels::get( 'module_category' ),
+				'group'           => Eventin_BT_Labels::get( 'module_group' ),
 				'dir'             => EVENTIN_BT_DIR . 'modules/eventin-calendar/',
 				'url'             => EVENTIN_BT_URL . 'modules/eventin-calendar/',
 				'partial_refresh' => true,

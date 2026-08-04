@@ -18,10 +18,10 @@ class Eventin_BT_Speakers_Module extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Eventin Speakers', 'eventin-beaver-themer' ),
+				'name'            => 'Eventin ' . Eventin_BT_Labels::get( 'speakers' ),
 				'description'     => __( 'A grid of Eventin speakers.', 'eventin-beaver-themer' ),
-				'category'        => __( 'Eventin', 'eventin-beaver-themer' ),
-				'group'           => __( 'Eventin', 'eventin-beaver-themer' ),
+				'category'        => Eventin_BT_Labels::get( 'module_category' ),
+				'group'           => Eventin_BT_Labels::get( 'module_group' ),
 				'dir'             => EVENTIN_BT_DIR . 'modules/eventin-speakers/',
 				'url'             => EVENTIN_BT_URL . 'modules/eventin-speakers/',
 				'partial_refresh' => true,
