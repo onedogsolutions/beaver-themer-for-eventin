@@ -9,7 +9,9 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Outputs the Eventin purchase / RSVP form for an event, for use on single
- * event Themer layouts (the replacement for the WooCommerce ticket form).
+ * event Themer layouts. Uses Eventin's own ticket form, so it works with
+ * Eventin's native cart or any optional checkout integration (WooCommerce,
+ * FluentCart) without changes here.
  */
 class Eventin_BT_Tickets_Module extends FLBuilderModule {
 

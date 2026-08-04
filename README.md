@@ -16,7 +16,7 @@ It lets you design Eventin **single event** pages and **event archive** pages wi
   - **Eventin Event Search** — search/filter form (`[event_search_filter]`)
   - **Eventin Speakers** — speakers grid (`[speakers]`)
   - **Eventin Schedule** — schedule tabs/list (`[schedules]` / `[schedules_list]`)
-  - **Eventin Event Tickets** — single-event ticket/registration form (Eventin's purchase form; replaces the WooCommerce ticket form on single event layouts)
+  - **Eventin Event Tickets** — single-event ticket/registration form (Eventin's own purchase/RSVP form)
 
   Each module renders through Eventin's own shortcodes/templates, so output matches Eventin exactly and stays correct as Eventin evolves.
 
@@ -24,7 +24,7 @@ When a Themer layout is assigned to an event location, the plugin removes Eventi
 
 ## Migrating from The Events Calendar
 
-This plugin is built to support replacing The Events Calendar (+ WooCommerce Event Tickets) with Eventin. The Beaver Builder modules above cover the equivalent front-end surfaces:
+This plugin is built to support replacing The Events Calendar + WooCommerce Event Tickets with Eventin. The Beaver Builder modules above cover the equivalent front-end surfaces:
 
 | The Events Calendar | Eventin Beaver Builder module |
 | --- | --- |
@@ -34,7 +34,7 @@ This plugin is built to support replacing The Events Calendar (+ WooCommerce Eve
 | Single event page | Themer *Singular* layout + field connections |
 | Ticket form (Event Tickets) | Eventin Event Tickets |
 
-The longer-term target stack is **Eventin + FluentCart**. The Tickets module renders Eventin's own purchase/RSVP form, so it follows whichever checkout engine Eventin is configured to use (WooCommerce today, FluentCart later) without changes here.
+Eventin has its own native cart and checkout. It can optionally integrate with WooCommerce or FluentCart, but neither is required. The Tickets module renders Eventin's own purchase/RSVP form, so it follows whichever checkout engine Eventin is configured to use (native Eventin cart, WooCommerce, or FluentCart) without changes here.
 
 ## How it works
 

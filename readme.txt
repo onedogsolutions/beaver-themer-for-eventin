@@ -4,7 +4,7 @@ Tags: eventin, beaver builder, beaver themer, events, theme builder
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -45,7 +45,7 @@ It also adds an **Eventin** group of Beaver Builder modules so you can rebuild t
 * **Eventin Event Search** — the event search / filter form.
 * **Eventin Speakers** — a grid of speakers.
 * **Eventin Schedule** — an event schedule as tabs or a list.
-* **Eventin Event Tickets** — the ticket / registration form for an event (use it on a single event layout in place of the WooCommerce ticket form).
+* **Eventin Event Tickets** — the ticket / registration form for an event. Uses Eventin's own ticket form, so it works with Eventin's native cart or any optional checkout integration (WooCommerce, FluentCart).
 
 Each module renders through Eventin's own shortcodes and templates, so output matches Eventin exactly.
 
@@ -63,6 +63,9 @@ Each module renders through Eventin's own shortcodes and templates, so output ma
 4. In *Beaver Builder > Themer Layouts*, add a new layout, choose **Singular** or **Archive**, and set its location to the *Event* post type or an event taxonomy.
 
 == Changelog ==
+
+= 1.1.1 =
+* **Documentation correction** — clarified that Eventin has its own native cart/checkout and that WooCommerce/FluentCart are optional integrations, not plugin requirements. Updated README, STATE, readme.txt, and module docblocks accordingly.
 
 = 1.1.0 =
 * **50+ field connections** — added P1 scalar connections (latitude/longitude, map URL, location type, external link, recurring flag, ticket stats, speaker/organizer counts) and P2 indexed connections (per-speaker, per-organizer, per-ticket, FAQ details).

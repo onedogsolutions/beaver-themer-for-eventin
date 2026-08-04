@@ -7,7 +7,7 @@ Keep this file up to date as features land — append to **History** and prune *
 - **Slug / text domain:** `eventin-beaver-themer`
 - **Author:** One Dog Solutions — https://onedog.solutions/
 - **Repository:** https://github.com/onedogsolutions/beaver-themer-for-eventin
-- **Current version:** 1.1.0 (released 2026-08-03)
+- **Current version:** 1.1.1 (released 2026-08-04)
 - **Requires:** WordPress 5.8+, PHP 7.4+, Eventin (`wp-event-solution`), Beaver Builder, Beaver Themer
 
 ## Purpose & context
@@ -17,10 +17,11 @@ A bridge between [Eventin](https://wordpress.org/plugins/wp-event-solution/) and
 designed in Beaver Builder, with field connections and front-end modules for event data.
 
 This plugin is the first piece of a larger migration. The driving project is replacing
-**The Events Calendar + WooCommerce** with **Eventin + FluentCart** on
-[overthetopcakesupplies.com](https://overthetopcakesupplies.com/). The longer-term target
-stack is **Eventin + FluentCart**; the plugin renders through Eventin's own
-shortcodes/templates so it follows whichever checkout engine Eventin is configured with.
+**The Events Calendar + WooCommerce Event Tickets** with **Eventin** on
+[overthetopcakesupplies.com](https://overthetopcakesupplies.com/). Eventin has its own
+native cart and checkout; WooCommerce and FluentCart are optional integrations rather
+than requirements. The plugin renders through Eventin's own shortcodes/templates so it
+follows whichever checkout engine Eventin is configured to use.
 
 Sibling project: `onedogsolutions/fluentthemer-beaver-builder`.
 
@@ -101,6 +102,7 @@ Key integration facts (verified against Eventin 4.1.14 source + live OTT Staging
 
 | Date | Version | Summary |
 | --- | --- | --- |
+| 2026-08-04 | 1.1.1 | **Documentation correction** — clarified that Eventin has its own native cart/checkout and that WooCommerce and FluentCart are optional integrations, not plugin requirements. Updated README.md, STATE.md, readme.txt, and Eventin Tickets module docblock. No runtime changes. |
 | 2026-08-03 | 1.1.0 | **Full connections, labels, bug fix** — 50+ field connections (P1 scalars: lat/lng, map URL, location type, external link, recurring flag, ticket stats, speaker/organizer counts; P2 indexed: per-speaker 8 fields, per-organizer 7 fields, per-ticket 5 fields, FAQ 2 fields). Label rewrite system (`Eventin_BT_Labels` with 3-tier override chain). Admin settings page at Settings → Eventin Beaver Themer for label customization without code. Fixed broken speaker/organizer getters (were calling `User_Model` methods on `stdClass` objects). All 7 modules retrofitted to use `Eventin_BT_Labels`. Verified on live OTT Staging via Novamira MCP. |
 | 2026-08-03 | 1.0.0-dev | **Distribution housekeeping** — replaced GPLv3 license with GPLv2 (matches plugin header), lean plugin-specific `.gitignore`, added `uninstall.php`, `languages/eventin-beaver-themer.pot` (99 strings) with `tools/generate-pot.php` regeneration script, updated `readme.txt` Tested up to 7.0. Zip packaged for live-site testing. |
 | 2026-06-13 | 1.0.0-dev | **Eventin Beaver Builder modules** (`b80a829`) — Eventin module group for events-site parity: Events, Events Tab, Events Calendar, Event Search, Speakers, Schedule, Event Tickets. Each wraps an Eventin shortcode/template function. README migration mapping added. |
@@ -137,8 +139,7 @@ Ordered roughly by priority for the overthetopcakesupplies.com migration.
       than relying solely on Eventin's stylesheet.
 
 ### Long term (target stack)
-- [ ] **FluentCart checkout verification** — once Eventin + FluentCart is the live stack,
-      confirm the Event Tickets module renders the FluentCart purchase flow correctly.
+- [ ] **FluentCart checkout verification (optional)** — if the site later enables FluentCart with Eventin, confirm the Event Tickets module renders the FluentCart purchase flow correctly.
 - [ ] **Full Oxygen/Bricks element parity** (optional) — port the remaining ~30 addon
       widgets as BB modules if demand warrants.
 - [x] **i18n `.pot` file** — `languages/eventin-beaver-themer.pot` with 99 translatable strings; `tools/generate-pot.php` regenerates from source.
